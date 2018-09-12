@@ -214,12 +214,14 @@ public class WeatherActivity extends AppCompatActivity {
 
     private String getDistrictCode(BDLocation location) {
         //处理字符串，去掉“省”、“市”和“区”字，以满足districtcode.json的格式需求
+        String resultCode = null;
         String provinceNameR = location.getProvince();
         String cityNameR = location.getCity();
         String districtNameR = location.getDistrict();
         String provinceName = provinceNameR.substring(0, provinceNameR.length() - 1);
         String cityName = cityNameR.substring(0, cityNameR.length() - 1);
         String districtName = districtNameR.substring(0, districtNameR.length() - 1);
+
 
         //从citycode.json中查询所在地的代码
         try {
@@ -250,11 +252,24 @@ public class WeatherActivity extends AppCompatActivity {
                                 JSONObject district = districtArray.getJSONObject(k);
 
                                 if (district.getString("name").equals(districtName)) {
-                                    return("CN" + district.getString("code"));
+                                    resultCode = "CN" + district.getString("code");
+                                    break;
                                 }
                             }
+                            //如果没有对应的地区代码，则查询所在城市代码
+                            if (resultCode == null) {
+                                for (int k = 0; k < districtArray.length(); k++) {
+                                    JSONObject district = districtArray.getJSONObject(k);
+                                    if (district.getString("name").equals(cityName)) {
+                                        resultCode = "CN" + district.getString("code");
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
                         }
                     }
+                    break;
                 }
 
             }
@@ -262,7 +277,7 @@ public class WeatherActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return resultCode;
     }
 
     public class MyLocationListener implements BDLocationListener {
