@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Administrator\Desktop\coolweather-master\CoolWeather.iml" filepath="C:\Users\Administrator\Desktop\coolweather-master\CoolWeather.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/coolweatherer.iml" filepath="$PROJECT_DIR$/coolweatherer.iml" />
     </modules>
